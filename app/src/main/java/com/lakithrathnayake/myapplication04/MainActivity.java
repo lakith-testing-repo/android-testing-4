@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DaoSession daoSession;
     Button btnSave, btnView;
-    EditText editTextName, editTextEmail, editTextPhone;
+    EditText editTextName, editTextEmail, editTextPhone, editTextCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         editTextName = findViewById(R.id.editTextName);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPhone = findViewById(R.id.editTextPhone);
+        editTextCity = findViewById(R.id.editTextCity);
 
         daoSession = ((MyApp) getApplication()).getDaoSession();
 
@@ -46,13 +47,16 @@ public class MainActivity extends AppCompatActivity {
                     null,
                     editTextName.getText().toString().trim(),
                     editTextEmail.getText().toString().trim(),
-                    editTextPhone.getText().toString().trim());
+                    editTextPhone.getText().toString().trim(),
+                    editTextCity.getText().toString().trim()
+            );
             try {
                 daoSession.getUserDao().insert(newUser);
                 Toast.makeText(this, "Successfully saved", Toast.LENGTH_LONG).show();
                 editTextName.getText().clear();
                 editTextEmail.getText().clear();
                 editTextPhone.getText().clear();
+                editTextCity.getText().clear();
                 editTextName.requestFocus();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             if(!users.isEmpty()) {
                 for (User u :
                         users) {
-                    Toast.makeText(this, "Names: " + u.getName(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Names: " + u.getCity(), Toast.LENGTH_LONG).show();
                 }
             } else {
 

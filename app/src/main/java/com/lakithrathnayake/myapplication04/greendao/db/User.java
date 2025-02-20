@@ -11,6 +11,15 @@ public class User {
     private String name;
     private String email;
     private String phone;
+    private String city;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public Long getId() {
         return id;
@@ -44,12 +53,13 @@ public class User {
         this.phone = phone;
     }
 
-    @Generated(hash = 1879107465)
-    public User(Long id, String name, String email, String phone) {
+    @Generated(hash = 2066396565)
+    public User(Long id, String name, String email, String phone, String city) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.city = city;
     }
 
     @Generated(hash = 586692638)
