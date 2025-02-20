@@ -7,8 +7,10 @@ import com.lakithrathnayake.myapplication04.greendao.db.DaoMaster;
 import org.greenrobot.greendao.database.Database;
 
 public class DatabaseHelper extends DaoMaster.OpenHelper {
-    public DatabaseHelper(Context context, String name) {
-        super(context, name);
+    private static final String DATABASE_NAME = "test.db";
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME);
     }
 
     @Override
