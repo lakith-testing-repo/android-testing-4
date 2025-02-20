@@ -1,5 +1,7 @@
 [versions]
 agp = "8.4.1"
+greendao = "3.3.0"
+greendaoGradlePlugin = "3.3.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -9,6 +11,9 @@ activity = "1.9.3"
 constraintlayout = "2.2.0"
 
 [libraries]
+greendao = { module = "org.greenrobot:greendao", version.ref = "greendao" }
+greendao-gradle-plugin = { module = "org.greenrobot:greendao-gradle-plugin", version.ref = "greendao" }
+greendao-gradle-plugin-v331 = { module = "org.greenrobot:greendao-gradle-plugin", version.ref = "greendaoGradlePlugin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
