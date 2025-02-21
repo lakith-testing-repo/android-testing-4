@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.lakithrathnayake.myapplication04.greendao.db.DaoSession;
 import com.lakithrathnayake.myapplication04.greendao.db.User;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,17 +65,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnView.setOnClickListener(v -> {
-            List<User> users = daoSession.getUserDao().loadAll();
-            if(!users.isEmpty()) {
-                for (User u :
-                        users) {
-                    Toast.makeText(this, "Names: " + u.getCity(), Toast.LENGTH_LONG).show();
-                }
+//            List<User> users = daoSession.getUserDao().loadAll();
+//            if(!users.isEmpty()) {
+//                for (User u :
+//                        users) {
+//                    Toast.makeText(this, "Names: " + u.getCity(), Toast.LENGTH_LONG).show();
+//                }
+//            } else {
+//
+//                Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+//            }
+
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+            if (connection != null) {
+                Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
             } else {
-
-                Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Not connected", Toast.LENGTH_LONG).show();
             }
-
         });
+
     }
 }
