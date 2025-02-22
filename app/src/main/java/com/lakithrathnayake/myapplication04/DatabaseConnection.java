@@ -15,13 +15,13 @@ public class DatabaseConnection {
             String database = "sql12763891";
             String user = "sql12763891";
             String password = "dKqb8rXspg";
-            Class.forName("com.mysql.cj.jdbc.Driver");
 
             String dbUrl = "jdbc:mysql://" + host + "/" + database + "?allowPublicKeyRetrieval=true";
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(dbUrl, user, password);
         } catch (Exception e) {
             e.printStackTrace();
