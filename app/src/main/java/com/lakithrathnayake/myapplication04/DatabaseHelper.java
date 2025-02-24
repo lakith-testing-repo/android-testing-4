@@ -3,6 +3,7 @@ package com.lakithrathnayake.myapplication04;
 import android.content.Context;
 
 import com.lakithrathnayake.myapplication04.greendao.db.DaoMaster;
+import com.lakithrathnayake.myapplication04.greendao.db.ItemsDao;
 import com.lakithrathnayake.myapplication04.greendao.db.UserDao;
 
 import org.greenrobot.greendao.database.Database;
@@ -27,6 +28,9 @@ public class DatabaseHelper extends DaoMaster.OpenHelper {
                 case 1:
                     db.execSQL("ALTER TABLE " + UserDao.TABLENAME +
                             " ADD COLUMN "  + UserDao.Properties.City.columnName + " TEXT;");
+                    break;
+                case 2:
+                    ItemsDao.createTable(db, true);
             }
         }
     }

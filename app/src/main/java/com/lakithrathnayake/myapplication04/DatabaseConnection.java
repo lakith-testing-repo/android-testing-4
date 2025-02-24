@@ -4,33 +4,28 @@ import android.os.StrictMode;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static DatabaseConnection instance;
-    private static Connection connection;
+    private static final String host = "sql12.freesqldatabase.com:3306";
+    private static final String database = "sql12763891";
+    private static final String user = "sql12763891";
+    private static final String password = "dKqb8rXspg";
+    private static final String dbUrl = "jdbc:mysql://" + host + "/" + database + "?allowPublicKeyRetrieval=true";
+
     private DatabaseConnection() {
+    }
+
+    public static Connection getConnection() throws SQLException {
         try {
-            String host = "sql12.freesqldatabase.com:3306";
-            String database = "sql12763891";
-            String user = "sql12763891";
-            String password = "dKqb8rXspg";
-
-            String dbUrl = "jdbc:mysql://" + host + "/" + database + "?allowPublicKeyRetrieval=true";
-
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(dbUrl, user, password);
+            return DriverManager.getConnection(dbUrl, user, password);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new SQLException("MySQL JDBC Driver not found", e);
         }
     }
-
-    public static DatabaseConnection getInstance() {
-        return (instance == null) ? (instance = new DatabaseConnection()) : instance;
-    }
-
-    public Connection getConnection(){return connection;};
 }

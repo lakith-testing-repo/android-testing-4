@@ -5,7 +5,7 @@ plugins {
 apply plugin: 'org.greenrobot.greendao'
 
 greendao {
-    schemaVersion 2
+    schemaVersion 3
 }
 
 android {
