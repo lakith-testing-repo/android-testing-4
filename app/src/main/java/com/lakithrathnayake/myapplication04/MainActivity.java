@@ -1,8 +1,15 @@
 package com.lakithrathnayake.myapplication04;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -11,9 +18,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.lakithrathnayake.myapplication04.greendao.db.DaoMaster;
 import com.lakithrathnayake.myapplication04.greendao.db.DaoSession;
 import com.lakithrathnayake.myapplication04.greendao.db.Items;
-import com.lakithrathnayake.myapplication04.greendao.db.ItemsDao;
 import com.lakithrathnayake.myapplication04.greendao.db.User;
 
 import java.sql.Connection;
@@ -28,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private DaoSession daoSession;
     Button btnSave, btnView, btnDownload;
     EditText editTextName, editTextEmail, editTextPhone, editTextCity;
+    ProgressBar progressBar;
+    private TableLayout tableLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPhone = findViewById(R.id.editTextPhone);
         editTextCity = findViewById(R.id.editTextCity);
+        progressBar = findViewById(R.id.progressBar);
+        tableLayout = findViewById(R.id.tableLayout);
 
         daoSession = ((MyApp) getApplication()).getDaoSession();
 
@@ -82,17 +94,18 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(this, "No data to show", Toast.LENGTH_LONG).show();
 //            }
 
-            Connection connection = null;
-            try {
-                connection = DatabaseConnection.getConnection();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            if (connection != null) {
-                Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Not connected", Toast.LENGTH_LONG).show();
-            }
+//
+            new Thread(() -> {
+                List<Items> items = daoSession.getItemsDao().loadAll();
+                runOnUiThread(() -> {
+                    if(!items.isEmpty()){
+                        clearTable();
+                        populateTable(items);
+                    } else {
+                        Toast.makeText(this, "No items found in database", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }).start();
         });
 
         btnDownload.setOnClickListener(v -> {
@@ -100,8 +113,46 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void populateTable(List<Items> items) {
+        for (Items item :
+                items) {
+            TableRow row = new TableRow(this);
+            row.setPadding(8, 8, 8, 8);
+
+            TextView idView = new TextView(this);
+            idView.setGravity(Gravity.CENTER);
+            idView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            idView.setText(String.valueOf(item.getItem_id()));
+            row.addView(idView);
+
+            // Add Code cell
+            TextView codeView = new TextView(this);
+            codeView.setGravity(Gravity.CENTER);
+            codeView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            codeView.setText(item.getItem_code());
+            row.addView(codeView);
+
+            // Add Description cell
+            TextView descView = new TextView(this);
+            descView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3f));
+            descView.setText(item.getItem_desc());
+            descView.setPadding(20,0,0,0);
+            row.addView(descView);
+            row.setBackgroundResource(R.drawable.light_row_border);
+
+            tableLayout.addView(row);
+        }
+    }
+
+    private void clearTable() {
+        if(tableLayout.getChildCount() > 1) {
+            tableLayout.removeViews(1, tableLayout.getChildCount() - 1);
+        }
+    }
+
     private void DownloadItems() {
         new Thread(() -> {
+            showProgress(true);
             Connection connection = null;
             try {
                 connection = DatabaseConnection.getConnection();
@@ -158,7 +209,15 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                showProgress(false);
             }
         }).start();
+    }
+
+    private void showProgress(boolean show) {
+        runOnUiThread(() -> {
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            btnDownload.setEnabled(!show);
+        });
     }
 }

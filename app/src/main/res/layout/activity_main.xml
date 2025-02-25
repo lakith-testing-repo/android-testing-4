@@ -104,12 +104,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextPhone"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="259dp"
-        android:layout_marginEnd="141dp"
-        android:layout_marginBottom="424dp"
-        android:text="DOWNLOAD
-"
+        android:layout_marginStart="143dp"
+        android:layout_marginTop="242dp"
+        android:layout_marginEnd="143dp"
+        android:layout_marginBottom="441dp"
+        android:text="DOWNLOAD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,4 +129,100 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="341dp"
+        android:layout_marginEnd="182dp"
+        android:layout_marginBottom="342dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnDownload">
+
+        <TableLayout
+            android:id="@+id/tableLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <!-- Header Row -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:padding="8dp"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="#604503FC"
+                    android:layout_marginRight="5dp"
+                    android:text="ID"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:gravity="center"
+                    android:background="#604503FC"
+                    android:layout_marginRight="5dp"
+                    android:text="Code"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:padding="2dp"
+                    android:gravity="center"
+                    android:text="Description"
+                    android:background="#604503FC"/>
+            </TableRow>
+
+
+        </TableLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="*">
+
+                </TableLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
