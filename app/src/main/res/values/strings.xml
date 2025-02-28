@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My Application 04</string>
+    <string name="sync">Sync data</string>
 </resources>

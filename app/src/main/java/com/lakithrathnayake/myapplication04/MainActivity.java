@@ -1,5 +1,8 @@
 package com.lakithrathnayake.myapplication04;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ContentResolver;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         tableLayout = findViewById(R.id.tableLayout);
 
         daoSession = ((MyApp) getApplication()).getDaoSession();
+        addSyncAccount();
 
         btnSave.setOnClickListener(v -> {
             User newUser = new User(
@@ -111,6 +115,19 @@ public class MainActivity extends AppCompatActivity {
         btnDownload.setOnClickListener(v -> {
             DownloadItems();
         });
+    }
+
+    private void addSyncAccount() {
+        AccountManager accountManager = AccountManager.get(this);
+        String accountType = "com.lakithrathnayake.myapplication04.account";
+        String authority = "com.lakithrathnayake.myapplication04.provider";
+        String accountName = "Lakith Rathnayake";
+        Account account = new Account(accountName, accountType);
+
+        if(accountManager.addAccountExplicitly(account, null, null)) {
+            ContentResolver.setSyncAutomatically(account, authority, true);
+            ContentResolver.addPeriodicSync(account, authority, Bundle.EMPTY, 60*5);
+        }
     }
 
     private void populateTable(List<Items> items) {
