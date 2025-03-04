@@ -126,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(accountManager.addAccountExplicitly(account, null, null)) {
             ContentResolver.setSyncAutomatically(account, authority, true);
-            ContentResolver.addPeriodicSync(account, authority, Bundle.EMPTY, 60*5);
+            ContentResolver.addPeriodicSync(account, authority, Bundle.EMPTY, 60*15);
+            ContentResolver.requestSync(account, authority, Bundle.EMPTY);
         }
     }
 
