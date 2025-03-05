@@ -55,7 +55,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             String sql = "SELECT * FROM items";
             ResultSet resultSet = statement.executeQuery(sql);
 
-            List<Items> localItems = new ArrayList<>();
+            List<Items> localItems = itemsDao.loadAll();
             Map<Integer, Items> localItemsMap = new HashMap<>();
             for (Items item :
                     localItems) {
